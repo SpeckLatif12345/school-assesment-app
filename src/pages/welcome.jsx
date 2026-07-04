@@ -12,7 +12,12 @@ function Welcome() {
   const [fileName, setFileName] = useState("");
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(false);
-  const { state, chooseClass, totalAttendance } = useApp();
+  const {
+    state,
+    dispatch: appDispatch,
+    chooseClass,
+    totalAttendance,
+  } = useApp();
   const { dispatch } = useStudents();
   const navigate = useNavigate();
 
@@ -22,11 +27,11 @@ function Welcome() {
 
     // Save choice (first-time setup)
     chooseClass(selectedClass);
-    toast.success("Class selected successfully!");
+    //toast.success("Class selected successfully!");
     setTimeout(() => {
       navigate("/schoolAssessment");
       setLoading(false);
-    }, 3000);
+    }, 2000);
 
     // home
   }
@@ -96,6 +101,11 @@ function Welcome() {
             });
             setFileName(file.name);
 
+            appDispatch({
+              type: "SET_TOTAL_ATTENDANCE",
+              payload: data.totalAttendance || 0,
+            });
+
             toast.success(
               `${data.students.length} students imported successfully`,
             );
@@ -118,6 +128,12 @@ function Welcome() {
       subjects: {},
       attendance: 0,
       promoted_to: "",
+      behaviour: {
+        conduct: "",
+        attitude: "",
+        interest: "",
+        class_teacher_remarks: "",
+      },
     }));
     dispatch({
       type: "FETCH_STUDENTS",

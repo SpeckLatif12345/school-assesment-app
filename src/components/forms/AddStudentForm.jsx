@@ -20,6 +20,12 @@ function AddStudentForm({ isSubmitted = false }) {
       subjects: {},
       attendance: 0,
       promoted_to: "",
+      behaviour: {
+        conduct: "",
+        attitude: "",
+        interest: "",
+        class_teacher_remarks: "",
+      },
     };
 
     dispatch({
