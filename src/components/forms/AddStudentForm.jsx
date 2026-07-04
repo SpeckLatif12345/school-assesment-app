@@ -15,11 +15,17 @@ function AddStudentForm({ isSubmitted = false }) {
     }
 
     const student = {
-      id: crypto.randomUUID(),
+      id: `id-${Date.now()}-${Math.random().toString(16).slice(2)}`,
       name,
       subjects: {},
       attendance: 0,
       promoted_to: "",
+      behaviour: {
+        conduct: "",
+        attitude: "",
+        interest: "",
+        class_teacher_remarks: "",
+      },
     };
 
     dispatch({

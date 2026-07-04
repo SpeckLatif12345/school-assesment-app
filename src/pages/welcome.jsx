@@ -8,25 +8,25 @@ import * as pdfjsLib from "pdfjs-dist"; // pdf
 import mammoth from "mammoth"; // word
 
 function Welcome() {
-  const [selectedClass, setSelectedClass] = useState("");
   const [fileName, setFileName] = useState("");
-  const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(false);
-  const { state, chooseClass, totalAttendance } = useApp();
-  const { dispatch } = useStudents();
+  const {
+    state,
+    dispatch: appDispatch,
+    chooseClass,
+    totalAttendance,
+  } = useApp();
+  const { state: studentState, dispatch: studentDispatch } = useStudents();
   const navigate = useNavigate();
 
   function handleContinue() {
-    if (!selectedClass) return;
+    if (!state.selectedClass) return;
     setLoading(true);
 
-    // Save choice (first-time setup)
-    chooseClass(selectedClass);
-    toast.success("Class selected successfully!");
     setTimeout(() => {
       navigate("/schoolAssessment");
       setLoading(false);
-    }, 3000);
+    }, 2000);
 
     // home
   }
@@ -90,11 +90,16 @@ function Welcome() {
             const data = JSON.parse(e.target.result);
             console.log(data);
 
-            dispatch({
+            studentDispatch({
               type: "FETCH_STUDENTS",
               payload: data.students,
             });
             setFileName(file.name);
+
+            appDispatch({
+              type: "SET_TOTAL_ATTENDANCE",
+              payload: data.totalAttendance || 0,
+            });
 
             toast.success(
               `${data.students.length} students imported successfully`,
@@ -113,13 +118,19 @@ function Welcome() {
 
     // Convert to student objects
     const studentObjects = names.map((name) => ({
-      id: crypto.randomUUID(),
+      id: `id-${Date.now()}-${Math.random().toString(16).slice(2)}`,
       name,
       subjects: {},
       attendance: 0,
       promoted_to: "",
+      behaviour: {
+        conduct: "",
+        attitude: "",
+        interest: "",
+        class_teacher_remarks: "",
+      },
     }));
-    dispatch({
+    studentDispatch({
       type: "FETCH_STUDENTS",
       payload: studentObjects,
     });
@@ -140,18 +151,20 @@ function Welcome() {
           Please select your class to get started
         </p>
 
-        <select
-          value={selectedClass}
-          onChange={(e) => setSelectedClass(e.target.value)}
-          className="w-full border rounded px-3 py-2 mb-6"
-        >
-          <option value="">Select your class</option>
-          {state.class_names.map((className) => (
-            <option key={className} value={className}>
-              {className}
-            </option>
-          ))}
-        </select>
+        <div>
+          <select
+            value={state.selectedClass}
+            onChange={(e) => chooseClass(e.target.value)}
+            className="w-full border rounded px-3 py-2 mb-6"
+          >
+            <option value="">Select your class</option>
+            {state.class_names.map((name) => (
+              <option key={name} value={name}>
+                {name}
+              </option>
+            ))}
+          </select>
+        </div>
         {/* FILE */}
 
         <div className="mt-6">
@@ -173,9 +186,9 @@ function Welcome() {
             <p className="mt-2 text-green-600 font-medium">📄 {fileName}</p>
           )}
 
-          {students.length > 0 && (
+          {studentState.students.length > 0 && (
             <p className="mt-1 text-blue-600">
-              {students.length} Students Imported
+              {studentState.students.length} Students Imported
             </p>
           )}
         </div>
@@ -192,7 +205,7 @@ function Welcome() {
             max="100"
             value={state.totalAttendance}
             onChange={(e) => {
-              if (selectedClass) {
+              if (state.selectedClass) {
                 totalAttendance(Number(e.target.value));
               } else {
                 toast.error("Please select a class first.");
@@ -204,10 +217,10 @@ function Welcome() {
 
         <button
           onClick={handleContinue}
-          disabled={!selectedClass}
+          disabled={!state.selectedClass}
           className={`w-full py-2 rounded text-white  flex items-center justify-center transition
             ${
-              selectedClass
+              state.selectedClass
                 ? "bg-blue-600 hover:bg-blue-700"
                 : "bg-gray-400 cursor-not-allowed"
             }`}

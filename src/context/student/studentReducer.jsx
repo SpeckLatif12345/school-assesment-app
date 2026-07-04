@@ -51,6 +51,14 @@ function studentReducer(state, action) {
       };
     }
 
+    case "CLEAR_STUDENTS": {
+      return {
+        ...state,
+        students: [],
+        saved: false,
+      };
+    }
+
     case "SET_SUBJECT": {
       return {
         ...state,
@@ -156,6 +164,22 @@ function studentReducer(state, action) {
         }),
       };
     }
+
+    case "SET_BEHAVIOUR":
+      return {
+        ...state,
+        students: state.students.map((student) =>
+          student.id === action.payload.id
+            ? {
+                ...student,
+                behaviour: {
+                  ...student.behaviour,
+                  [action.payload.field]: action.payload.value,
+                },
+              }
+            : student,
+        ),
+      };
 
     default:
       return state;

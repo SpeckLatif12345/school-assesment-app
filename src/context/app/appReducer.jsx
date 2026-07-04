@@ -1,8 +1,6 @@
 export const initialState = {
-  selectedClass: localStorage.getItem("selectedClass") || null,
+  selectedClass: localStorage.getItem("selectedClass") || "",
   sign_in: localStorage.getItem("sign-in") === "true",
-  questions: [],
-  grades: [],
   subjects: ["Mathematics", "English", "Science"],
   class_names: [
     "CLASS ONE",
@@ -35,7 +33,8 @@ export function appReducer(state, action) {
       localStorage.removeItem("sign-in");
       return {
         ...state,
-        selectedClass: null,
+        selectedClass: "",
+        sign_in: false,
       };
 
     case "FETCH_QUESTIONS":

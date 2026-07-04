@@ -11,6 +11,7 @@ function SubmitButton({ submitted = false }) {
       school: "Chrispal International School",
       class: appState.selectedClass,
       students: [...state.students],
+      totalAttendance: appState.totalAttendance,
     };
     // convert into json format to download
     const blob = new Blob([JSON.stringify(reportData, null, 2)], {

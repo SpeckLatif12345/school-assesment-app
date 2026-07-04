@@ -2,10 +2,14 @@ import { FaGraduationCap, FaCheckCircle, FaClock } from "react-icons/fa";
 import { useApp } from "../context/app/appContext";
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
+import { useStudents } from "../context/student/studentContext";
+import { useUI } from "../context/ui/uiContext";
 
 function Header({ submitted = true }) {
   const { state, resetSetup } = useApp();
   const navigate = useNavigate();
+  const { dispatch } = useStudents();
+  const { forceResetApp } = useUI(); // stopped here because the user requested not to suggest code that has been deleted.
 
   // reset to login again
   const handleReset = useCallback(() => {
@@ -13,9 +17,14 @@ function Header({ submitted = true }) {
 
     if (!confirmReset) return;
 
+    dispatch({ type: "CLEAR_STUDENTS" });
     resetSetup();
-    navigate("/");
-  });
+
+    setTimeout(() => {
+      forceResetApp();
+      navigate("/", { replace: true });
+    }, 0);
+  }, [dispatch, resetSetup, navigate]);
 
   return (
     <header className="border-b border-slate-800 bg-slate-900 px-6 py-5 text-white md:px-8">
