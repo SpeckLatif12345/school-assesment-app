@@ -1,8 +1,8 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
-  "productName": "school-assesment-app",
+  "productName": "School Assessment",
   "version": "0.1.0",
-  "identifier": "com.tauri.dev",
+  "identifier": "com.school.assessment",
   "build": {
     "frontendDist": "../dist",
     "devUrl": "http://localhost:3003",
@@ -12,11 +12,14 @@
   "app": {
     "windows": [
       {
-        "title": "school-assesment-app",
+        "title": "School Assessment",
         "width": 800,
         "height": 600,
         "resizable": true,
-        "fullscreen": false
+        "fullscreen": false,
+        "decorations": true,
+        "transparent": false,
+        "shadow": true
       }
     ],
     "security": {

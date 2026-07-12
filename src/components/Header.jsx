@@ -3,13 +3,11 @@ import { useApp } from "../context/app/appContext";
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useStudents } from "../context/student/studentContext";
-import { useUI } from "../context/ui/uiContext";
 
 function Header({ submitted = true }) {
-  const { state, resetSetup } = useApp();
+  const { state, dispatch: appDispatch, resetSetup } = useApp();
   const navigate = useNavigate();
   const { dispatch } = useStudents();
-  const { forceResetApp } = useUI(); // stopped here because the user requested not to suggest code that has been deleted.
 
   // reset to login again
   const handleReset = useCallback(() => {
@@ -17,11 +15,27 @@ function Header({ submitted = true }) {
 
     if (!confirmReset) return;
 
+    const saved = localStorage.getItem(`${state.selectedClass}`);
+
+    if (saved) {
+      const reportData = JSON.parse(saved);
+      if (reportData.class === state.selectedClass) {
+        console.log(`at Submit-function:${reportData.class}`);
+        localStorage.removeItem(`${state.selectedClass}`);
+      }
+    }
+
+    // clearing import status
+    appDispatch({
+      type: "SET_IMPORT_STATUS",
+      payload: false,
+    });
+
+    // clearing students
     dispatch({ type: "CLEAR_STUDENTS" });
-    resetSetup();
 
     setTimeout(() => {
-      forceResetApp();
+      resetSetup();
       navigate("/", { replace: true });
     }, 0);
   }, [dispatch, resetSetup, navigate]);

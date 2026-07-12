@@ -4,6 +4,7 @@ import { HashRouter } from "react-router-dom";
 import App from "./App.jsx";
 import { StudentProvider } from "./context/student/studentContext.jsx";
 import { AppProvider } from "./context/app/appContext.jsx";
+import "../src/index.css";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>

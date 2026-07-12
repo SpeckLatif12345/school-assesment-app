@@ -12,6 +12,8 @@ export const initialState = {
     "French",
     "Religious & Moral Education",
     "Computing",
+    "English Language",
+    "Career Technology",
   ],
   name: "",
   saved: false,

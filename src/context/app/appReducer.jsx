@@ -1,7 +1,5 @@
 export const initialState = {
-  selectedClass: localStorage.getItem("selectedClass") || "",
-  sign_in: localStorage.getItem("sign-in") === "true",
-  subjects: ["Mathematics", "English", "Science"],
+  selectedClass: "",
   class_names: [
     "CLASS ONE",
     "CLASS TWO",
@@ -14,33 +12,22 @@ export const initialState = {
     "JSS THREE",
   ],
   totalAttendance: 0,
+  isFullscreen: false,
+  hasImported: false,
 };
 
 export function appReducer(state, action) {
   switch (action.type) {
     case "SET_CLASS":
-      localStorage.setItem("selectedClass", action.payload);
-      localStorage.setItem("sign-in", "true");
-
       return {
         ...state,
         selectedClass: action.payload,
-        sign_in: true,
       };
 
     case "CLEAR_CLASS":
-      localStorage.removeItem("selectedClass");
-      localStorage.removeItem("sign-in");
       return {
         ...state,
         selectedClass: "",
-        sign_in: false,
-      };
-
-    case "FETCH_QUESTIONS":
-      return {
-        ...state,
-        questions: action.payload,
       };
 
     case "SET_TOTAL_ATTENDANCE":
@@ -53,6 +40,18 @@ export function appReducer(state, action) {
       return {
         ...state,
         totalAttendance: 0,
+      };
+
+    case "TOGGLE_FULLSCREEN":
+      return {
+        ...state,
+        isFullscreen: !state.isFullscreen,
+      };
+
+    case "SET_IMPORT_STATUS":
+      return {
+        ...state,
+        hasImported: action.payload,
       };
 
     default:

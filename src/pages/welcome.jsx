@@ -37,6 +37,11 @@ function Welcome() {
       return;
     }
 
+    appDispatch({
+      type: "SET_IMPORT_STATUS",
+      payload: true,
+    });
+
     const ext = file.name.split(".").pop().toLowerCase();
     let names = [];
 
@@ -88,7 +93,6 @@ function Welcome() {
         reader.onload = (e) => {
           try {
             const data = JSON.parse(e.target.result);
-            console.log(data);
 
             studentDispatch({
               type: "FETCH_STUDENTS",

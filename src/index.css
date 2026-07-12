@@ -1,0 +1,19 @@
+@layer base {
+  html,
+  body {
+    cursor: default;
+  }
+
+  button,
+  a,
+  [role="button"],
+  input,
+  select,
+  textarea {
+    cursor: pointer;
+  }
+
+  * {
+    cursor: inherit;
+  }
+}
