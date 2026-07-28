@@ -11,7 +11,9 @@ function Header() {
 
   // reset to login again
   const handleReset = useCallback(() => {
-    const confirmReset = window.confirm("Are you sure you want to logout?");
+    const confirmReset = window.confirm(
+      "Are you sure you want to logout? All your data will be cleared",
+    );
 
     if (!confirmReset) return;
 

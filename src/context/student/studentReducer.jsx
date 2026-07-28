@@ -2,7 +2,6 @@
 export const initialState = {
   students: [],
   currentSubject: "Mathematics",
-  submittedSubjects: {}, //  { Math: true, English: false }
   subjects: [
     "Mathematics",
     "Integrated Science",
@@ -14,21 +13,10 @@ export const initialState = {
     "Computing",
     "English Language",
     "Career Technology",
+    "History",
   ],
   name: "",
   saved: false,
-  tableData: [
-    "PROJECT WORK 20",
-    "CLASS WORK 40",
-    "CLASS TEST 10",
-    "CLASS TEST 10",
-    "HOME WORK 20",
-    "TOTAL 100%",
-    "SUBTOTAL 50%",
-    "EXAMS SCORE ",
-    "EXAMS SCORE 50%",
-    "TOTAL A + B",
-  ],
 };
 
 //  Reducer (ALL logic lives here)
@@ -78,16 +66,28 @@ function studentReducer(state, action) {
         "HomeWork",
       ];
 
+      const scores = {
+        projectWork: 20,
+        classWork: 40,
+        classTestOne: 10,
+        classTestTwo: 10,
+        HomeWork: 20,
+      };
+
       return {
         ...state,
         students: state.students.map((student) => {
           if (student.id === id) {
             const currentSubject =
               student.subjects?.[state.currentSubject] || {};
+
+            // getting field score
+            const field_score = scores[field];
+
             // Update the edited field
             const updatedSubject = {
               ...currentSubject,
-              [field]: Number(value),
+              [field]: Number(value) <= field_score ? Number(value) : 0,
             };
             // Calculate the total score for the subject
             const totalB = titles.reduce((sum, key) => {
@@ -105,8 +105,7 @@ function studentReducer(state, action) {
               subjects: {
                 ...student.subjects,
                 [state.currentSubject]: {
-                  ...student.subjects?.[state.currentSubject],
-                  [field]: value,
+                  ...updatedSubject,
                   classPercent,
                   examPercent,
                   totalB,

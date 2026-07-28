@@ -175,7 +175,7 @@ function Welcome() {
           <select
             value={state.selectedClass}
             onChange={(e) => chooseClass(e.target.value)}
-            className="w-full border rounded px-3 py-2 mb-6"
+            className="w-full border rounded px-3 py-2 mb-2"
           >
             <option value="">Select your class</option>
             {state.class_names.map((name) => (
@@ -187,7 +187,7 @@ function Welcome() {
         </div>
         {/* FILE */}
 
-        <div className="mt-6">
+        <div className="mt-2">
           <label className="font-semibold">Import Students</label>
 
           <input
@@ -203,17 +203,18 @@ function Welcome() {
           </p>
 
           {fileName && (
-            <p className="mt-2 text-green-600 font-medium">📄 {fileName}</p>
-          )}
-
-          {studentState.students.length > 0 && (
-            <p className="mt-1 text-blue-600">
-              {studentState.students.length} Students Imported
+            <p className="mt-2 text-green-600 font-medium">
+              📄 {fileName} {": "}
+              <span className="mt-1 text-blue-600">
+                {studentState.students.length > 0 && (
+                  <span>{studentState.students.length} Students Imported </span>
+                )}
+              </span>
             </p>
           )}
         </div>
 
-        <div className="mt-6">
+        <div className=" w-full  mt-4 mb-4 text-center">
           <label className="font-semibold px-0.5 mx-0.5 text-sm text-gray-700">
             Total Attendance
           </label>

@@ -78,6 +78,14 @@ function StudentTable({}) {
 
     return "border-rose-300 bg-rose-100 text-rose-800 font-bold";
   }
+
+  // Save scroll before entering fullscreen
+  useEffect(() => {
+    if (appState.isFullscreen) {
+      scrollYRef.current = window.scrollY;
+    }
+  }, [appState.isFullscreen]);
+
   //  exit from fullscreen
   useEffect(() => {
     const handleEsc = (e) => {
@@ -109,13 +117,16 @@ function StudentTable({}) {
     };
   }, [appState.isFullscreen]);
 
+  // Restore scroll after leaving fullscreen
   useEffect(() => {
     if (!appState.isFullscreen) {
       requestAnimationFrame(() => {
-        window.scrollTo({
-          top: scrollYRef.current,
-          behavior: "smooth",
-        });
+        setTimeout(() => {
+          window.scrollTo({
+            top: scrollYRef.current,
+            behavior: "smooth",
+          });
+        }, 100);
       });
     }
   }, [appState.isFullscreen]);
@@ -132,6 +143,7 @@ function StudentTable({}) {
         position: appState.isFullscreen ? "fixed" : "relative",
         top: appState.isFullscreen ? 0 : "auto",
         left: appState.isFullscreen ? 0 : "auto",
+        inset: 0,
         width: appState.isFullscreen ? "100vw" : "100%",
         height: appState.isFullscreen ? "100vh" : "auto",
         zIndex: appState.isFullscreen ? 9999 : 1,
@@ -141,16 +153,31 @@ function StudentTable({}) {
       className="overflow-auto shadow-md"
     >
       <div className="flex items-center justify-center  px-6 py-3  ">
-        <div className="flex  items-center justify-between px-6 py-3 border border-slate-200 align-center rounded-lg bg-slate-50 shadow-md w-full">
-          <h2 className=" text-4xl font-bold tracking-tight text-slate-800">
-            {state.currentSubject}
-          </h2>
-          <div className="flex items-center align-center gap-4">
+        <div
+          className={`flex  items-center justify-between  ${appState.isFullscreen ? `border border-slate-200  rounded-lg bg-slate-50 shadow-md ` : ``}   px-6 py-3   w-full `}
+        >
+          {!appState.isFullscreen && (
+            <div>
+              <h3 className="text-lg font-bold text-slate-800">
+                Student Grades
+              </h3>
+              <p className="mt-0.5 text-xs text-slate-500">
+                Class performance logs, weighted continuous assessment (50%),
+                exam weights (50%), and overall final standing.
+              </p>
+            </div>
+          )}
+          {appState.isFullscreen && (
+            <h2 className=" text-4xl font-bold tracking-tight text-slate-800">
+              {state.currentSubject}
+            </h2>
+          )}
+          <div className="flex items-center align-center gap-4  ">
             {appState.isFullscreen && <SubjectSelector />}
 
             <button
               onClick={toggleFullscreen}
-              className=" rounded bg-blue-600 px-4 py-2 text-white"
+              className=" rounded bg-blue-600 px-4 py-2 text-white "
             >
               {appState.isFullscreen ? "Exit Fullscreen" : "Fullscreen Table"}
             </button>
@@ -245,7 +272,7 @@ function StudentTable({}) {
                       type="number"
                       min="0"
                       max="20"
-                      value={subj.projectWork || 0}
+                      value={subj.projectWork || ""}
                       onChange={(e) => {
                         if (state.currentSubject) {
                           handleScoreChange(
@@ -265,7 +292,7 @@ function StudentTable({}) {
                       type="number"
                       min="0"
                       max="40"
-                      value={subj.classWork || 0}
+                      value={subj.classWork || ""}
                       onChange={(e) => {
                         if (state.currentSubject) {
                           handleScoreChange(
@@ -285,7 +312,7 @@ function StudentTable({}) {
                       type="number"
                       min="0"
                       max="10"
-                      value={subj.classTestOne || 0}
+                      value={subj.classTestOne || ""}
                       onChange={(e) => {
                         if (state.currentSubject) {
                           handleScoreChange(
@@ -305,7 +332,7 @@ function StudentTable({}) {
                       type="number"
                       min="0"
                       max="10"
-                      value={subj.classTestTwo || 0}
+                      value={subj.classTestTwo || ""}
                       onChange={(e) => {
                         if (state.currentSubject) {
                           handleScoreChange(
@@ -325,7 +352,7 @@ function StudentTable({}) {
                       type="number"
                       min="0"
                       max="20"
-                      value={subj.HomeWork || 0}
+                      value={subj.HomeWork || ""}
                       onChange={(e) => {
                         if (state.currentSubject) {
                           handleScoreChange(
@@ -353,7 +380,7 @@ function StudentTable({}) {
                       type="number"
                       min="0"
                       max="100"
-                      value={subj.examScore || 0}
+                      value={subj.examScore || ""}
                       onChange={(e) => {
                         if (state.currentSubject) {
                           handleScoreChange(
@@ -425,6 +452,7 @@ function StudentTable({}) {
                   <td className="px-6 py-4 text-center  border border-slate-800 ">
                     <input
                       type="text"
+                      placeholder="optional"
                       value={student.behaviour?.conduct || ""}
                       onChange={(e) =>
                         handleBehaviourChange(
@@ -441,6 +469,7 @@ function StudentTable({}) {
                   <td className="px-6 py-4 text-center  border border-slate-800 ">
                     <input
                       type="text"
+                      placeholder="optional"
                       value={student.behaviour?.attitude || ""}
                       onChange={(e) =>
                         handleBehaviourChange(
@@ -456,6 +485,7 @@ function StudentTable({}) {
                   {/* Interest */}
                   <td className="px-6 py-4 text-center  border border-slate-800 ">
                     <input
+                      placeholder="optional"
                       type="text"
                       value={student.behaviour?.interest || ""}
                       onChange={(e) =>
@@ -482,7 +512,7 @@ function StudentTable({}) {
                       }
                       rows={3}
                       className="w-48 resize-y rounded border px-2 py-1 text-xs"
-                      placeholder="Enter teacher's remarks..."
+                      placeholder="optional"
                     />
                   </td>
                   <td className="px-6 py-4 text-center  border border-slate-800">
