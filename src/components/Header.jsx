@@ -1,10 +1,10 @@
-import { FaGraduationCap, FaCheckCircle, FaClock } from "react-icons/fa";
+import { FaGraduationCap, FaCheckCircle } from "react-icons/fa";
 import { useApp } from "../context/app/appContext";
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useStudents } from "../context/student/studentContext";
 
-function Header({ submitted = true }) {
+function Header() {
   const { state, dispatch: appDispatch, resetSetup } = useApp();
   const navigate = useNavigate();
   const { dispatch } = useStudents();
@@ -16,13 +16,10 @@ function Header({ submitted = true }) {
     if (!confirmReset) return;
 
     const saved = localStorage.getItem(`${state.selectedClass}`);
+    const reportData = JSON.parse(saved);
 
-    if (saved) {
-      const reportData = JSON.parse(saved);
-      if (reportData.class === state.selectedClass) {
-        console.log(`at Submit-function:${reportData.class}`);
-        localStorage.removeItem(`${state.selectedClass}`);
-      }
+    if (saved && reportData.class === state.selectedClass) {
+      localStorage.removeItem(`${state.selectedClass}`);
     }
 
     // clearing import status
@@ -63,34 +60,22 @@ function Header({ submitted = true }) {
 
         {/* Right */}
 
-        {submitted ? (
-          <div className="flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-950/70 px-5 py-3">
-            <span className="h-3 w-3 animate-pulse rounded-full bg-emerald-400"></span>
+        <div className="flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-950/70 px-5 py-3">
+          <span className="h-3 w-3 animate-pulse rounded-full bg-emerald-400"></span>
 
-            <FaCheckCircle className="text-emerald-400" />
+          <FaCheckCircle className="text-emerald-400" />
 
-            <span className="text-sm font-semibold text-emerald-200">
-              {state.selectedClass}
-            </span>
-            {/* Reset Button */}
-            <button
-              className="ml-4 bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-sm"
-              onClick={handleReset}
-            >
-              logout
-            </button>
-          </div>
-        ) : (
-          <div className="flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-950/70 px-5 py-3">
-            <span className="h-3 w-3 animate-pulse rounded-full bg-amber-400"></span>
-
-            <FaClock className="text-amber-400" />
-
-            <span className="text-sm font-semibold text-amber-200">
-              Open for Evaluation
-            </span>
-          </div>
-        )}
+          <span className="text-sm font-semibold text-emerald-200">
+            {state.selectedClass}
+          </span>
+          {/* Reset Button */}
+          <button
+            className="ml-4 bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-sm"
+            onClick={handleReset}
+          >
+            logout
+          </button>
+        </div>
       </div>
     </header>
   );

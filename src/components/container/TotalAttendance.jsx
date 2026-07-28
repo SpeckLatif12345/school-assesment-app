@@ -1,8 +1,6 @@
 import { FaUsers } from "react-icons/fa";
-import { useStudents } from "../../context/student/studentContext";
 import { useApp } from "../../context/app/appContext";
 function TotalAttendance() {
-  const { state } = useStudents();
   const { state: appState } = useApp();
   return (
     <div className="flex h-32 flex-col justify-between rounded-2xl border border-slate-100 bg-slate-50/50 p-5 transition-all hover:border-slate-200">

@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useReducer } from "react";
+import { createContext, useContext, useReducer } from "react";
 import { initialState, appReducer } from "./appReducer";
 
 const AppContext = createContext(null);

@@ -2,8 +2,8 @@ import { FaPlus } from "react-icons/fa6";
 import { useState } from "react";
 import { useStudents } from "../../context/student/studentContext";
 import { toast } from "react-toastify";
-function AddStudentForm({ isSubmitted = false }) {
-  const { state, dispatch } = useStudents();
+function AddStudentForm() {
+  const { dispatch } = useStudents();
   const [name, setname] = useState("");
 
   const handleSubmit = (e) => {
@@ -37,11 +37,7 @@ function AddStudentForm({ isSubmitted = false }) {
   };
 
   return (
-    <section
-      className={`rounded-2xl border border-slate-100 bg-slate-50 p-6 transition-all duration-300 ${
-        isSubmitted ? "pointer-events-none opacity-50" : ""
-      }`}
-    >
+    <section className="rounded-2xl border border-slate-100 bg-slate-50 p-6 transition-all duration-300 ">
       <div className="mb-4 flex items-center gap-2">
         <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-100 text-blue-600">
           <FaPlus className="h-4 w-4" />

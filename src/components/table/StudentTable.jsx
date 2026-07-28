@@ -1,4 +1,4 @@
-import { FaTrash, FaUsers } from "react-icons/fa";
+import { FaUsers } from "react-icons/fa";
 import { FaRegTrashCan } from "react-icons/fa6";
 import { toast } from "react-toastify";
 import { useStudents } from "../../context/student/studentContext";
@@ -78,12 +78,14 @@ function StudentTable({}) {
 
     return "border-rose-300 bg-rose-100 text-rose-800 font-bold";
   }
-  // Fullscreen state
+  //  exit from fullscreen
   useEffect(() => {
     const handleEsc = (e) => {
       if (e.key === "Escape") {
         e.preventDefault();
-        setIsFullscreen(false);
+        appDispatch({
+          type: "TOGGLE_FULLSCREEN",
+        });
       }
     };
 
@@ -190,7 +192,7 @@ function StudentTable({}) {
                 <span>Exams </span> <br /> Score
               </th>
               <th className=" sticky top-0 z-50 border border-slate-800 text-orange-600  bg-slate-50 shadow-md px-6 py-4 text-center font-bold  align-middle">
-                <span>Exams Score  B</span> <br /> 50%
+                <span>Exams Score B</span> <br /> 50%
               </th>
               <th className=" sticky top-0 z-50 border border-slate-800  bg-slate-50 shadow-md px-6 py-4 text-center font-bold  align-middle">
                 <span>Total </span> <br /> A + B

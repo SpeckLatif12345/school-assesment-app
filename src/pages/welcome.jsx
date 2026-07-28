@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useApp } from "../context/app/appContext";
 import { useStudents } from "../context/student/studentContext";
 import { toast } from "react-toastify";
 import * as XLSX from "xlsx"; // csv
-import * as pdfjsLib from "pdfjs-dist"; // pdf
+// pdf
 import mammoth from "mammoth"; // word
 
 function Welcome() {
@@ -143,6 +143,22 @@ function Welcome() {
 
     toast.success(`${studentObjects.length} students imported successfully`);
   }
+
+  useEffect(() => {
+    const saved = localStorage.getItem(`${state.selectedClass}`);
+    const reportData = JSON.parse(saved);
+    if (saved && reportData.class === state.selectedClass) {
+      const new_reportData = {
+        ...reportData,
+        totalAttendance: state.totalAttendance,
+        savedAt: new Date().toISOString(),
+      };
+      localStorage.setItem(
+        `${state.selectedClass}`,
+        JSON.stringify(new_reportData),
+      );
+    }
+  }, [state.totalAttendance]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
