@@ -72,6 +72,7 @@ function studentReducer(state, action) {
         classTestOne: 10,
         classTestTwo: 10,
         HomeWork: 20,
+        examScore: 100,
       };
 
       return {
@@ -94,7 +95,7 @@ function studentReducer(state, action) {
               return sum + Number(updatedSubject[key] || 0);
             }, 0);
             //  percentage 50%
-            const classPercent = (totalB / 100) * 50;
+            const classPercent = Math.round((totalB / 100) * 50);
 
             // Exam percentage 50%
             const examPercent =

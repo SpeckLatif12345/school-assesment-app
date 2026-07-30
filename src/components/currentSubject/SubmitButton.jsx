@@ -3,11 +3,13 @@ import { useStudents } from "../../context/student/studentContext";
 import { useApp } from "../../context/app/appContext";
 import { useEffect, useRef } from "react";
 import { toast } from "react-toastify";
+import { useFileSave } from "../../utils/useFileSave";
 
 function SubmitButton({ submitted = false }) {
   const { state, dispatch } = useStudents();
   const { state: appState, dispatch: appDispatch } = useApp();
   const hasRestored = useRef(false);
+  const { saveAs } = useFileSave();
 
   // AUTO SAVE
   useEffect(() => {
@@ -50,13 +52,21 @@ function SubmitButton({ submitted = false }) {
     }
   }, []);
 
-  const handleSave = () => {
+  const handleSave = async () => {
     const reportData = {
       school: "Chrispal International School",
       class: appState.selectedClass,
       students: [...state.students],
       totalAttendance: appState.totalAttendance,
     };
+
+    const saved = await saveAs(reportData, appState.selectedClass);
+
+    if (saved) {
+      toast.success("Grades Saved Successfully");
+    }
+
+    /*
     // convert into json format to download
     const blob = new Blob([JSON.stringify(reportData, null, 2)], {
       type: "application/json",
@@ -72,7 +82,7 @@ function SubmitButton({ submitted = false }) {
     URL.revokeObjectURL(url);
     dispatch({
       type: "GRADES_SAVED",
-    });
+    }); */
   };
 
   return (

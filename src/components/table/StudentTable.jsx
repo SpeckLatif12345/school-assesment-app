@@ -284,7 +284,7 @@ function StudentTable({}) {
                           toast.error("Please select a subject first.");
                         }
                       }}
-                      className="mx-auto w-16 rounded-lg border border-slate-200 bg-white px-2 py-1 text-center text-sm font-semibold transition-all focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 disabled:bg-slate-50 disabled:text-slate-400"
+                      className="mx-auto w-16 rounded-lg border border-slate-400 bg-white px-2 py-1 text-center text-sm font-semibold transition-all focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 disabled:bg-slate-50 disabled:text-slate-400"
                     />
                   </td>
                   <td className="px-6 py-4 text-center   border border-slate-800 ">
@@ -304,7 +304,7 @@ function StudentTable({}) {
                           toast.error("Please select a subject first.");
                         }
                       }}
-                      className="mx-auto w-16 rounded-lg border border-slate-200 bg-white px-2 py-1 text-center text-sm font-semibold transition-all focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 disabled:bg-slate-50 disabled:text-slate-400"
+                      className="mx-auto w-16 rounded-lg border border-slate-400 bg-white px-2 py-1 text-center text-sm font-semibold transition-all focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 disabled:bg-slate-50 disabled:text-slate-400"
                     />
                   </td>
                   <td className="px-6 py-4 text-center  border border-slate-800 ">
@@ -324,7 +324,7 @@ function StudentTable({}) {
                           toast.error("Please select a subject first.");
                         }
                       }}
-                      className="mx-auto w-16 rounded-lg border border-slate-200 bg-white px-2 py-1 text-center text-sm font-semibold transition-all focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 disabled:bg-slate-50 disabled:text-slate-400"
+                      className="mx-auto w-16 rounded-lg border border-slate-400 bg-white px-2 py-1 text-center text-sm font-semibold transition-all focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 disabled:bg-slate-50 disabled:text-slate-400"
                     />
                   </td>
                   <td className="px-6 py-4 text-center  border border-slate-800 ">
@@ -344,7 +344,7 @@ function StudentTable({}) {
                           toast.error("Please select a subject first.");
                         }
                       }}
-                      className="mx-auto w-16 rounded-lg border border-slate-200 bg-white px-2 py-1 text-center text-sm font-semibold transition-all focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 disabled:bg-slate-50 disabled:text-slate-400"
+                      className="mx-auto w-16 rounded-lg border border-slate-400 bg-white px-2 py-1 text-center text-sm font-semibold transition-all focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 disabled:bg-slate-50 disabled:text-slate-400"
                     />
                   </td>
                   <td className="px-6 py-4 text-center  border border-slate-800 ">
@@ -364,7 +364,7 @@ function StudentTable({}) {
                           toast.error("Please select a subject first.");
                         }
                       }}
-                      className="mx-auto w-16 rounded-lg border border-slate-200 bg-white px-2 py-1 text-center text-sm font-semibold transition-all focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 disabled:bg-slate-50 disabled:text-slate-400"
+                      className="mx-auto w-16 rounded-lg border border-slate-400 bg-white px-2 py-1 text-center text-sm font-semibold transition-all focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 disabled:bg-slate-50 disabled:text-slate-400"
                     />
                   </td>
                   <td className="px-6 py-4 text-center text-sm  text-blue-700 font-bold border border-slate-800 ">
@@ -392,7 +392,7 @@ function StudentTable({}) {
                           toast.error("Please select a subject first.");
                         }
                       }}
-                      className="mx-auto w-16 rounded-lg border border-slate-200 bg-white px-2 py-1 text-center text-sm font-semibold transition-all focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 disabled:bg-slate-50 disabled:text-slate-400"
+                      className="mx-auto w-16 rounded-lg border border-slate-400 bg-white px-2 py-1 text-center text-sm font-semibold transition-all focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 disabled:bg-slate-50 disabled:text-slate-400"
                     />
                   </td>
 
@@ -402,8 +402,8 @@ function StudentTable({}) {
 
                   <td className="px-6 py-4 text-center  border border-slate-800 ">
                     <span
-                      className={`inline-flex items-center justify-center rounded-full  shadow-sm border px-3 py-1 text-xs font-bold${totalBadgeClass(totalA)}
-                    )}`}
+                      className={`inline-flex w-16 items-center justify-center rounded-full  shadow-sm border px-3 py-1 text-xs font-bold${totalBadgeClass(totalA)}
+                    }`}
                     >
                       {Math.round(totalA) || 0}%
                     </span>
@@ -423,7 +423,7 @@ function StudentTable({}) {
                           toast.error("Please select a subject first.");
                         }
                       }}
-                      className="mx-auto w-16 rounded-lg border border-slate-200 bg-white px-2 py-1 text-center text-sm font-semibold transition-all focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 disabled:bg-slate-50 disabled:text-slate-400"
+                      className="mx-auto w-16 rounded-lg border border-slate-400 bg-white px-2 py-1 text-center text-sm font-semibold transition-all focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 disabled:bg-slate-50 disabled:text-slate-400"
                     />
                   </td>
 
@@ -511,7 +511,7 @@ function StudentTable({}) {
                         )
                       }
                       rows={3}
-                      className="w-48 resize-y rounded border px-2 py-1 text-xs"
+                      className="w-48 resize-y text-center rounded border px-2 py-1 text-xs"
                       placeholder="optional"
                     />
                   </td>
