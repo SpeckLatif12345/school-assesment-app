@@ -3,6 +3,7 @@ import { useApp } from "../context/app/appContext";
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useStudents } from "../context/student/studentContext";
+import { confirm } from "@tauri-apps/plugin-dialog";
 
 function Header() {
   const { state, dispatch: appDispatch, resetSetup } = useApp();
@@ -10,8 +11,8 @@ function Header() {
   const { dispatch } = useStudents();
 
   // reset to login again
-  const handleReset = useCallback(() => {
-    const confirmReset = window.confirm(
+  const handleReset = useCallback(async () => {
+    const confirmReset = await confirm(
       "Are you sure you want to logout? All your data will be cleared",
     );
 
