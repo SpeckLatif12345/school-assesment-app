@@ -3,7 +3,7 @@ import { FaRegTrashCan } from "react-icons/fa6";
 import { toast } from "react-toastify";
 import { useStudents } from "../../context/student/studentContext";
 import { useApp } from "../../context/app/appContext";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import SubjectSelector from "../container/SubjectSelector";
 import { motion } from "framer-motion";
 
@@ -11,7 +11,19 @@ function StudentTable({}) {
   const { state, dispatch } = useStudents();
   const { state: appState, dispatch: appDispatch } = useApp();
   const [selectedClass, setSelectedClass] = useState("");
+  const [search, setSearch] = useState("");
   const scrollYRef = useRef(0);
+
+  // for searching students by name
+  const filteredStudents = useMemo(() => {
+    const keyword = search.trim().toLowerCase();
+
+    if (!keyword) return state.students;
+
+    return state.students.filter((student) =>
+      student.name.toLowerCase().includes(keyword),
+    );
+  }, [search, state.students]);
 
   // Handle score change for a student
   function handleScoreChange(id, field, value) {
@@ -172,6 +184,18 @@ function StudentTable({}) {
               {state.currentSubject}
             </h2>
           )}
+          {appState.isFullscreen && (
+            <div className="bg-white p-2 rounded-lg">
+              <input
+                type="text"
+                placeholder="Search students..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className=" w-full h-8  rounded-lg border border-gray-300 px-4 "
+              />
+            </div>
+          )}
+
           <div className=" flex items-center align-center gap-4  ">
             {appState.isFullscreen && <SubjectSelector />}
 
@@ -253,7 +277,7 @@ function StudentTable({}) {
           </thead>
 
           <tbody className="divide-y divide-slate-100">
-            {state.students.map((student) => {
+            {filteredStudents.map((student) => {
               const subj = student.subjects?.[state.currentSubject] || {};
               const totalA =
                 Number(subj.classPercent) + Number(subj.examPercent);

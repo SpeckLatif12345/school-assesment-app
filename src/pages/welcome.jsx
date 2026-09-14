@@ -222,9 +222,10 @@ function Welcome() {
 
           <input
             type="number"
+            placeholder="0"
             min="0"
             max="100"
-            value={state.totalAttendance}
+            value={state.totalAttendance || ""}
             onChange={(e) => {
               if (state.selectedClass) {
                 totalAttendance(Number(e.target.value));
