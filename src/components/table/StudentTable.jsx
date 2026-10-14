@@ -143,6 +143,28 @@ function StudentTable({}) {
     }
   }, [appState.isFullscreen]);
 
+  //  handle auto generate scores for continuous assessment
+  const generateContinuousAssessment = (studentId) => {
+    const scores = [
+      { field: "projectWork", value: 20 },
+      { field: "classWork", value: 40 },
+      { field: "classTestOne", value: 10 },
+      { field: "classTestTwo", value: 10 },
+      { field: "HomeWork", value: 20 },
+    ];
+
+    scores.forEach(({ field, value }) => {
+      dispatch({
+        type: "SET_SCORE",
+        payload: {
+          id: studentId,
+          field,
+          value,
+        },
+      });
+    });
+  };
+
   return (
     <motion.div
       layout
@@ -179,20 +201,22 @@ function StudentTable({}) {
               </p>
             </div>
           )}
+
           {appState.isFullscreen && (
-            <h2 className=" text-4xl font-bold tracking-tight text-slate-800">
-              {state.currentSubject}
-            </h2>
-          )}
-          {appState.isFullscreen && (
-            <div className="bg-white p-2 rounded-lg">
-              <input
-                type="text"
-                placeholder="Search students..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className=" w-full h-8  rounded-lg border border-gray-300 px-4 "
-              />
+            <div className=" w-[800px]  flex  items-center justify-between gap-4  ">
+              <h2 className=" shrink-0 text-4xl font-bold tracking-tight text-slate-800">
+                {state.currentSubject}
+              </h2>
+
+              <div className=" shrink-0 bg-white p-2 rounded-lg">
+                <input
+                  type="text"
+                  placeholder="Search students..."
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  className=" w-full h-8  rounded-lg border border-gray-300 px-4 "
+                />
+              </div>
             </div>
           )}
 
@@ -288,7 +312,16 @@ function StudentTable({}) {
                   className="group transition-colors hover:bg-slate-50/40  "
                 >
                   <td className=" sticky left-0 z-30 px-6 py-4  bg-slate-50  border border-slate-800  text-sm font-bold text-slate-800 shadow-sm">
-                    {student.name}
+                    <span className="flex  justify-between ">
+                      {student.name}
+                      <button
+                        className="bg-indigo-600 px-3 py-1.5 rounded-lg"
+                        onClick={() => generateContinuousAssessment(student.id)}
+                        title="Generate scores automatically"
+                      >
+                        auto
+                      </button>
+                    </span>
                   </td>
 
                   <td className="px-6 py-4 text-center   border border-slate-800 ">
