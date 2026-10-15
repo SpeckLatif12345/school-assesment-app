@@ -12,7 +12,7 @@ function TotalAttendance() {
       </div>
       <div className="mt-2 flex items-baseline gap-2">
         <span className="text-3xl font-extrabold text-slate-800">
-          {appState.totalAttendance}
+          {appState.totalAttendance ? appState.totalAttendance : 0}
         </span>
       </div>
     </div>

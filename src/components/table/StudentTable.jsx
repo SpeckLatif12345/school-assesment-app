@@ -312,10 +312,10 @@ function StudentTable({}) {
                   className="group transition-colors hover:bg-slate-50/40  "
                 >
                   <td className=" sticky left-0 z-30 px-6 py-4  bg-slate-50  border border-slate-800  text-sm font-bold text-slate-800 shadow-sm">
-                    <span className="flex  justify-between ">
-                      {student.name}
+                    <span className="flex  items-center justify-between gap-4">
+                      <h3 className="font-bold shrink-0">{student.name}</h3>
                       <button
-                        className="bg-indigo-600 px-3 py-1.5 rounded-lg"
+                        className="bg-indigo-600 px-3 py-1.5 rounded-lg shrink-0"
                         onClick={() => generateContinuousAssessment(student.id)}
                         title="Generate scores automatically"
                       >
@@ -594,17 +594,12 @@ function StudentTable({}) {
           </tbody>
         </table>
         {/* if no students */}
-        {!state.students.length && (
+        {!filteredStudents.length && (
           <div className="flex flex-col items-center justify-center p-12 text-center">
             <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-slate-50">
               <FaUsers className="h-8 w-8 text-slate-400" />
             </div>
-            <p className="font-bold text-slate-600">
-              No students in this class roster
-            </p>
-            <p className="mt-1 text-xs text-slate-400">
-              Use the entry form below to begin cataloging assessment data.
-            </p>
+            <p className="font-bold text-slate-600">No students found</p>
           </div>
         )}
       </div>
