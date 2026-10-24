@@ -1,8 +1,8 @@
 import SubmitButton from "./SubmitButton";
-import { useStudents } from "../../context/student/studentContext";
+import { useSubjectsByClass } from "../../utils/useSubjectByClass";
 
 function CurrentSubject() {
-  const { state } = useStudents();
+  const { currentSubject } = useSubjectsByClass();
   return (
     <section className="flex flex-col gap-6 border-b border-slate-200 pb-8 lg:flex-row lg:items-end lg:justify-between">
       {/* Left */}
@@ -12,7 +12,7 @@ function CurrentSubject() {
         </p>
 
         <h2 className="mt-2 text-4xl font-extrabold tracking-tight text-slate-800">
-          {state.currentSubject}
+          {currentSubject}
         </h2>
 
         <p className="mt-2 text-sm text-slate-500">

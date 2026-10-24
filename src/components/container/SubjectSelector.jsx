@@ -1,10 +1,12 @@
 import { FaBookOpen, FaChevronDown } from "react-icons/fa";
 import { useStudents } from "../../context/student/studentContext";
 import { useApp } from "../../context/app/appContext";
+import { useSubjectsByClass } from "../../utils/useSubjectByClass";
 
 function SubjectSelector() {
   const { state, dispatch } = useStudents();
   const { state: appState } = useApp();
+  const { availableSubjects, currentSubject } = useSubjectsByClass();
 
   const handleSubjectChange = (subject) => {
     dispatch({
@@ -16,11 +18,11 @@ function SubjectSelector() {
   return appState.isFullscreen ? (
     <div className="relative ">
       <select
-        value={state.currentSubject}
+        value={currentSubject}
         onChange={(event) => handleSubjectChange(event.target.value)}
         className="w-full appearance-none rounded-xl border border-slate-200 bg-white py-2.5 pl-4 pr-10 text-sm font-semibold text-slate-700 shadow-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
       >
-        {state.subjects.map((subject) => (
+        {availableSubjects.map((subject) => (
           <option
             key={subject}
             value={subject}
@@ -46,11 +48,11 @@ function SubjectSelector() {
       {/* Select */}
       <div className="relative mt-3">
         <select
-          value={state.currentSubject}
+          value={currentSubject}
           onChange={(event) => handleSubjectChange(event.target.value)}
           className="w-full appearance-none rounded-xl border border-slate-200 bg-white py-2.5 pl-4 pr-10 text-sm font-semibold text-slate-700 shadow-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
         >
-          {state.subjects.map((subject) => (
+          {availableSubjects.map((subject) => (
             <option
               key={subject}
               value={subject}

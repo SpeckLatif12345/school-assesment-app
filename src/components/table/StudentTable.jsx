@@ -10,7 +10,6 @@ import { motion } from "framer-motion";
 function StudentTable({}) {
   const { state, dispatch } = useStudents();
   const { state: appState, dispatch: appDispatch } = useApp();
-  const [selectedClass, setSelectedClass] = useState("");
   const [search, setSearch] = useState("");
   const scrollYRef = useRef(0);
 
@@ -479,7 +478,7 @@ function StudentTable({}) {
                       placeholder="0"
                       min="0"
                       max="100"
-                      value={student.attendance || 0}
+                      value={student.attendance || ""}
                       onChange={(e) => {
                         if (state.currentSubject) {
                           handleAttendanceChange(student.id, e.target.value);
